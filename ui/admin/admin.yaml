@@ -1,0 +1,361 @@
+about:
+  date: October 17, 2024 18:01:02
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 11
+  number_tables: 12
+info_toggle_checked: true
+resources:
+  Address:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: client_id
+      required: true
+    - name: street
+      required: true
+    - name: city
+      required: true
+    - name: state
+      required: true
+    - name: zip_code
+      required: true
+    - name: country
+      required: true
+    description: Stores addresses of clients.
+    info_list: Stores addresses of clients.
+    tab_groups:
+    - direction: toone
+      fks:
+      - client_id
+      name: client
+      resource: Client
+    type: Address
+    user_key: id
+  Appointment:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: client_id
+      required: true
+    - name: datetime
+      required: true
+    - name: location
+      required: true
+    - name: purpose
+      required: true
+    description: Stores appointments with clients.
+    info_list: Stores appointments with clients.
+    tab_groups:
+    - direction: toone
+      fks:
+      - client_id
+      name: client
+      resource: Client
+    type: Appointment
+    user_key: id
+  Chat:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: client_id
+      required: true
+    - name: datetime
+    - name: chat_content
+      required: true
+    description: Stores chat logs of interactions with clients.
+    info_list: Stores chat logs of interactions with clients.
+    tab_groups:
+    - direction: toone
+      fks:
+      - client_id
+      name: client
+      resource: Client
+    type: Chat
+    user_key: id
+  Client:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: email
+    - name: phone
+      required: true
+    - name: whatsapp_number
+    - name: registration_date
+    - name: id
+    description: Table to store client information.
+    info_list: Table to store client information.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - client_id
+      name: AddressList
+      resource: Address
+    - direction: tomany
+      fks:
+      - client_id
+      name: AppointmentList
+      resource: Appointment
+    - direction: tomany
+      fks:
+      - client_id
+      name: ChatList
+      resource: Chat
+    - direction: tomany
+      fks:
+      - client_id
+      name: CustomerSupportList
+      resource: CustomerSupport
+    - direction: tomany
+      fks:
+      - client_id
+      name: FeedbackList
+      resource: Feedback
+    - direction: tomany
+      fks:
+      - client_id
+      name: InteractionList
+      resource: Interaction
+    - direction: tomany
+      fks:
+      - client_id
+      name: OrderList
+      resource: Order
+    - direction: tomany
+      fks:
+      - client_id
+      name: TaskList
+      resource: Task
+    - direction: tomany
+      fks:
+      - client_id
+      name: WhatsappMessageList
+      resource: WhatsappMessage
+    type: Client
+    user_key: name
+  CustomerSupport:
+    attributes:
+    - label: ' issue_description*'
+      name: issue_description
+      required: true
+      search: true
+      sort: true
+    - name: client_id
+      required: true
+    - name: resolution_date
+    - name: id
+    - name: resolved
+    description: Records interactions with customer support.
+    info_list: Records interactions with customer support.
+    tab_groups:
+    - direction: toone
+      fks:
+      - client_id
+      name: client
+      resource: Client
+    type: CustomerSupport
+    user_key: issue_description
+  Feedback:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: client_id
+      required: true
+    - name: datetime
+    - name: comments
+    - name: rating
+      required: true
+    description: Stores feedback from clients.
+    info_list: Stores feedback from clients.
+    tab_groups:
+    - direction: toone
+      fks:
+      - client_id
+      name: client
+      resource: Client
+    type: Feedback
+    user_key: id
+  Interaction:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: client_id
+      required: true
+    - name: datetime
+    - name: Type
+      required: true
+    - name: notes
+    description: Stores interactions between the business and clients.
+    info_list: Stores interactions between the business and clients.
+    tab_groups:
+    - direction: toone
+      fks:
+      - client_id
+      name: client
+      resource: Client
+    type: Interaction
+    user_key: id
+  Order:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: client_id
+      required: true
+    - name: order_date
+    description: Stores client orders.
+    info_list: Stores client orders.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - order_id
+      name: OrderDetailList
+      resource: OrderDetail
+    - direction: toone
+      fks:
+      - client_id
+      name: client
+      resource: Client
+    type: Order
+    user_key: id
+  OrderDetail:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: order_id
+      required: true
+    - name: product_id
+      required: true
+    - name: quantity
+      required: true
+    description: Contains details of each product in a client order.
+    info_list: Contains details of each product in a client order.
+    tab_groups:
+    - direction: toone
+      fks:
+      - order_id
+      name: order
+      resource: Order
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: OrderDetail
+    user_key: id
+  Product:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: description
+    - name: price
+      required: true
+    - name: id
+    description: Table to store products that can be sold to clients.
+    info_list: Table to store products that can be sold to clients.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - product_id
+      name: OrderDetailList
+      resource: OrderDetail
+    type: Product
+    user_key: name
+  Task:
+    attributes:
+    - label: ' description*'
+      name: description
+      required: true
+      search: true
+      sort: true
+    - name: client_id
+      required: true
+    - name: due_date
+      required: true
+    - name: id
+    - name: completed
+    description: Stores tasks assigned for interacting with clients.
+    info_list: Stores tasks assigned for interacting with clients.
+    tab_groups:
+    - direction: toone
+      fks:
+      - client_id
+      name: client
+      resource: Client
+    type: Task
+    user_key: description
+  WhatsappMessage:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: client_id
+      required: true
+    - name: datetime
+    - name: direction
+      required: true
+    - name: message_content
+      required: true
+    description: Stores WhatsApp messages.
+    info_list: Stores WhatsApp messages.
+    tab_groups:
+    - direction: toone
+      fks:
+      - client_id
+      name: client
+      resource: Client
+    type: WhatsappMessage
+    user_key: id
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'

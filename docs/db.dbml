@@ -1,0 +1,111 @@
+// Copy this text, paste to https://dbdiagram.io/d
+// Or, https://databasediagram.com/app
+
+Table Address {
+    id INTEGER [primary key]
+    client_id INTEGER 
+    street VARCHAR 
+    city VARCHAR 
+    state VARCHAR 
+    zip_code VARCHAR 
+    country VARCHAR 
+    }
+
+Table Client {
+    id INTEGER [primary key]
+    name VARCHAR 
+    email VARCHAR 
+    phone VARCHAR 
+    whatsapp_number VARCHAR 
+    registration_date DATETIME 
+    }
+
+Table Appointment {
+    id INTEGER [primary key]
+    client_id INTEGER 
+    datetime DATETIME 
+    location VARCHAR 
+    purpose TEXT 
+    }
+
+Table Chat {
+    id INTEGER [primary key]
+    client_id INTEGER 
+    datetime DATETIME 
+    chat_content TEXT 
+    }
+
+Table CustomerSupport {
+    id INTEGER [primary key]
+    client_id INTEGER 
+    issue_description TEXT 
+    resolved BOOLEAN 
+    resolution_date DATETIME 
+    }
+
+Table Feedback {
+    id INTEGER [primary key]
+    client_id INTEGER 
+    datetime DATETIME 
+    comments TEXT 
+    rating INTEGER 
+    }
+
+Table Interaction {
+    id INTEGER [primary key]
+    client_id INTEGER 
+    datetime DATETIME 
+    Type VARCHAR 
+    notes TEXT 
+    }
+
+Table Order {
+    id INTEGER [primary key]
+    client_id INTEGER 
+    order_date DATETIME 
+    }
+
+Table OrderDetail {
+    id INTEGER [primary key]
+    order_id INTEGER 
+    product_id INTEGER 
+    quantity INTEGER 
+    }
+
+Table Product {
+    id INTEGER [primary key]
+    name VARCHAR 
+    description TEXT 
+    price INTEGER 
+    }
+
+Table Task {
+    id INTEGER [primary key]
+    client_id INTEGER 
+    due_date DATETIME 
+    description TEXT 
+    completed BOOLEAN 
+    }
+
+Table WhatsappMessage {
+    id INTEGER [primary key]
+    client_id INTEGER 
+    datetime DATETIME 
+    direction VARCHAR 
+    message_content TEXT 
+    }
+
+
+
+// Relationships
+    Ref: Address.(client_id) < Client.(id)
+    Ref: Appointment.(client_id) < Client.(id)
+    Ref: Chat.(client_id) < Client.(id)
+    Ref: CustomerSupport.(client_id) < Client.(id)
+    Ref: Feedback.(client_id) < Client.(id)
+    Ref: Interaction.(client_id) < Client.(id)
+    Ref: Order.(client_id) < Client.(id)
+    Ref: OrderDetail.(order_id) < Order.(id)
+    Ref: OrderDetail.(product_id) < Product.(id)
+    Ref: Task.(client_id) < Client.(id)
+    Ref: WhatsappMessage.(client_id) < Client.(id)
